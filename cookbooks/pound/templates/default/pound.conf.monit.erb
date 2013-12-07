@@ -1,0 +1,4 @@
+check process pound with pidfile /var/run/pound.pid
+  start program = "/usr/sbin/service pound start"
+  stop  program = "/usr/sbin/service pound stop"
+  if failed host <%= node.ec2.public_ipv4 %> port 443 then restart

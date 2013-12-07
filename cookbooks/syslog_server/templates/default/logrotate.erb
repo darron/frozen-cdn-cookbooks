@@ -1,0 +1,13 @@
+/var/log/counter/traffic.log
+{
+	rotate 30
+	missingok
+	notifempty
+	size 100M
+	compress
+	create 0644 syslog adm
+	copytruncate
+	postrotate
+		reload rsyslog >/dev/null 2>&1 || true
+	endscript
+}

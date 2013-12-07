@@ -1,0 +1,1 @@
+{"name":"varnish","description":"","json_class":"Chef::Role","default_attributes":{},"override_attributes":{},"chef_type":"role","run_list":["recipe[varnish]","recipe[pound]","recipe[nginx]","recipe[cdn_varnish_config]"],"env_run_lists":{}}

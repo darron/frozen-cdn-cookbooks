@@ -1,0 +1,1 @@
+{"name":"counter","description":"","json_class":"Chef::Role","default_attributes":{},"override_attributes":{},"chef_type":"role","run_list":["recipe[syslog_server]","recipe[redis]","recipe[redis::counter]","recipe[counter]"],"env_run_lists":{}}

@@ -1,0 +1,9 @@
+$ModLoad imuxsock             # local message reception
+
+$WorkDirectory /var/spool/rsyslog/work  # default location for work (spool) files
+
+$ActionQueueType LinkedList   # use asynchronous processing
+$ActionQueueFileName counterfwd  # set file name, also enables disk mode
+$ActionResumeRetryCount -1    # infinite retries on insert failure
+$ActionQueueSaveOnShutdown on # save in-memory data if rsyslog shuts down
+local7.*          @@counter.frozencdn.net:514

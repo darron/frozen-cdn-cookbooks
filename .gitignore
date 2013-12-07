@@ -1,0 +1,4 @@
+.rake_test_cache
+.rvmrc
+bin
+.DS_Store

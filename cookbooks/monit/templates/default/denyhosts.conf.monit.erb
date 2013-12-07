@@ -1,0 +1,4 @@
+check process denyhosts with pidfile /var/run/denyhosts.pid
+   start program  "/usr/sbin/service denyhosts start"
+   stop program  "/usr/sbin/service denyhosts stop"
+   if 5 restarts within 5 cycles then timeout

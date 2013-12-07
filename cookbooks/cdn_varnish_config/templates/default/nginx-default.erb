@@ -1,0 +1,19 @@
+# You may add here your
+# server {
+#       ...
+# }
+# statements for each of your virtual hosts
+
+server {
+        listen   81 default;
+        server_name  localhost;
+
+        access_log  /var/log/nginx/localhost.access.log;
+
+        location / {
+                root   /var/www/nginx-default;
+                index  index.html index.htm;
+        }
+
+        error_page  404  /error.html;
+}

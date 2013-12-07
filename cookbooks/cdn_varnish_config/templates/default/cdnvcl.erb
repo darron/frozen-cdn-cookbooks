@@ -1,0 +1,24 @@
+#!/bin/bash
+NEW_CONFIG="/home/vcl/default.vcl"
+OLD_CONFIG="/etc/varnish/default.vcl"
+
+if [ -f $NEW_CONFIG ]
+then
+	logger "Updated Varnish VCL exists - checking to see if it's different."
+	cd /etc/varnish
+	DIFF=$( /usr/bin/diff $NEW_CONFIG $OLD_CONFIG --brief )
+	if [ "$DIFF" != "" ]
+	then
+		logger "Varnish VCL file is different - replacing."
+		/bin/mv -f $NEW_CONFIG $OLD_CONFIG
+		# Reload Varnish nicely.
+		DATE=`date +%s`
+		/usr/bin/varnishadm -T 127.0.0.1:6082 -S /etc/varnish/secret vcl.load reload$DATE /etc/varnish/default.vcl
+		/usr/bin/varnishadm -T 127.0.0.1:6082 -S /etc/varnish/secret vcl.use reload$DATE
+	else
+		logger "Varnish VCL file is the SAME. Stopping."		
+	fi
+else
+	logger "Updated Varnish VCL file does not exist."
+fi
+[ "$?" != "0" ] &&  logger "$0 - EMERGENCY: Bad varnish config loaded." || :

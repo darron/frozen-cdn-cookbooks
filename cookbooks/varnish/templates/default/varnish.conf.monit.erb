@@ -1,0 +1,4 @@
+check process varnish with pidfile /var/run/varnishd.pid
+  start program = "/usr/sbin/service varnish start"
+  stop  program = "/usr/sbin/service varnish stop"
+  if failed host <%= node.ec2.public_ipv4 %> port 80 then restart

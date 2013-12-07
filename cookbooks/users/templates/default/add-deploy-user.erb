@@ -1,0 +1,26 @@
+#!/bin/bash
+
+DEPLOY_USER=$1
+
+if [ ! -d /home/$DEPLOY_USER ]; then
+	/usr/sbin/useradd -m -g deploy $DEPLOY_USER
+	mkdir -m 700 /home/$DEPLOY_USER/.ssh
+
+	# Install everybody's keys to the deploy user.
+	# TODO: Automate this with chef.
+	declare -a names=(darron)
+	for i in "${names[@]}"; do
+	  cat /home/$i/.ssh/authorized_keys >> /home/$DEPLOY_USER/.ssh/authorized_keys
+	done
+
+	# Create key for github.
+	ssh-keygen -N '' -q -t dsa -f /home/$DEPLOY_USER/.ssh/id_dsa
+	cat /home/$DEPLOY_USER/.ssh/id_dsa.pub
+
+	# Make sure keys are chowned properly.
+	chmod 600 /home/$DEPLOY_USER/.ssh/authorized_keys
+	chown -R $DEPLOY_USER.deploy /home/$DEPLOY_USER/.ssh
+else
+	echo "There is already a user with that name."
+fi;
+
